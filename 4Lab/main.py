@@ -12,33 +12,27 @@ class DatabaseApp(QMainWindow):
         self.setWindowTitle("Database Application")
         self.setGeometry(100, 100, 800, 600)
 
-        # Задаём путь к файлу базы данных
         folder_path = "database_folder"
         db_path = os.path.join(folder_path, "posts.db")
 
-        # Подключение к существующей базе данных
         self.db = QSqlDatabase.addDatabase("QSQLITE")
         self.db.setDatabaseName(db_path)
         if not self.db.open():
             QMessageBox.critical(None, "Database Error", self.db.lastError().text())
-            sys.exit(1)  # Завершаем приложение при ошибке
+            sys.exit(1)
 
-        # Модель данных
         self.model = QSqlTableModel()
         self.model.setTable("posts")
         self.model.select()
 
-        # Виджет для таблицы
         self.table_view = QTableView()
         self.table_view.setModel(self.model)
         self.table_view.setSelectionBehavior(QTableView.SelectRows)
 
-        # Поле поиска
         self.search_field = QLineEdit()
         self.search_field.setPlaceholderText("Search by title")
         self.search_field.textChanged.connect(self.search_records)
 
-        # Кнопки
         self.refresh_button = QPushButton("Refresh")
         self.add_button = QPushButton("Add")
         self.delete_button = QPushButton("Delete")
@@ -47,7 +41,6 @@ class DatabaseApp(QMainWindow):
         self.add_button.clicked.connect(self.add_record)
         self.delete_button.clicked.connect(self.delete_record)
 
-        # Размещение элементов интерфейса
         buttons_layout = QHBoxLayout()
         buttons_layout.addWidget(self.refresh_button)
         buttons_layout.addWidget(self.add_button)
