@@ -6,7 +6,6 @@ import asyncio
 import sqlite3
 import os
 
-os.environ["QT_PLUGIN_PATH"] = r"C:\Users\Арсений\AppData\Local\Programs\Python\Python312\Lib\site-packages\PyQt5\Qt5\plugins"
 
 # Подключение к БД
 def create_connection():
